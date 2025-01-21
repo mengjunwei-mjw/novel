@@ -1,0 +1,19 @@
+RepoName: mengjunwei-mjw/novel
+RunCommand: |
+  echo "start run command"
+SourceCodePath: .
+CommandTimeout: 3600
+SecurityGroupPorts:
+- 80
+RuntimeType: LinuxShell
+ServicePorts:
+- 80
+ServiceType: private
+ArtifactSourceType: SourceCode
+ImageId: '"{{resolve:oos:aliyun/services/computenest/images/aliyun_3_2104_nodejs_20}}"'
+ServiceBuildRegion: ap-southeast-1
+RegionId: cn-hangzhou
+CustomParameters: ''
+Owner: mengjunwei-mjw
+Branch: feat/delete-computenest
+Platform: github

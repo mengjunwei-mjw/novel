@@ -1,0 +1,67 @@
+Service:
+  RegionId: cn-hangzhou
+  DeployType: ros
+  OperationMetadata:
+    StatusOperationConfigs:
+      - TemplateName: ECS单机版
+        SupportOperations:
+          - Start
+          - Stop
+          - Restart
+    SupportBackup: true
+    ModifyParametersConfig:
+      - TemplateName: ECS单机版
+        Operation:
+          - Name: 变更ECS实例规格
+            Description: 变更ECS实例规格
+            Type: Custom
+            Parameters:
+              - EcsInstanceType
+          - Name: 变更ECS实例密码
+            Description: 变更ECS实例密码
+            Type: Custom
+            Parameters:
+              - InstancePassword
+  DeployMetadata:
+    SupplierDeployMetadata:
+      SupplierTemplateConfigs:
+        - Name: ECS单机版
+          Url: 'ros_templates/template.yaml'
+          ArchitectureDiagramUrl: 'resources/architecture/architecture.jpg'
+          AllowedRegions:
+            - ap-southeast-1
+      ArtifactRelation:
+        ecs_image_novel:
+          ArtifactId: ${Artifact.EcsImage.ArtifactId}
+          ArtifactVersion: draft
+    TemplateConfigs:
+      - Name: ECS单机版
+        Url: 'ros_templates/template.yaml'
+        ArchitectureDiagramUrl: 'resources/architecture/architecture.jpg'
+        AllowedRegions:
+          - ap-southeast-1
+  ServiceType: private
+  ServiceInfo:
+    # 英文版可以再配置Locale为en-US的服务信息
+    - Locale: zh-CN
+      ShortDescription: demo
+      Image: 'resources/icons/service_logo.png'
+Artifact:
+  EcsImage:
+    ArtifactType: EcsImage
+    ArtifactName: ecs_image_novel
+    Description: novel EcsImage
+    SupportRegionIds:
+        - ap-southeast-1
+    ArtifactBuildProperty:
+      CodeRepo:
+        Platform: github
+        Owner: mengjunwei-mjw
+        RepoName: mengjunwei-mjw/novel
+        Branch: feat/delete-computenest
+      RegionId: ap-southeast-1
+      CommandType: RunShellScript
+      SourceImageId: aliyun/services/computenest/images/aliyun_3_2104_nodejs_20
+      CommandContent: |-
+        mkdir -p /root/application
+        cp -r /root/code/./* /root/application/;
